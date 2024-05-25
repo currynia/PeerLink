@@ -15,7 +15,14 @@ public class RegisterService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    private void checkDuplicate(User user) {
+        if (userRepo.findUserByUsername(user.getUsername()) != null) {
+            throw new DuplicateUserException();
+        }
+    }
+
     public void registerUser(User user) throws IllegalArgumentException {
+        checkDuplicate(user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
     }
