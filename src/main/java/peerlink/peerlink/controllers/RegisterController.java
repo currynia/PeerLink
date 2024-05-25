@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import peerlink.peerlink.db.model.User;
-import peerlink.peerlink.services.DuplicateUserException;
-import peerlink.peerlink.services.RegisterService;
+import peerlink.peerlink.security.DuplicateUserException;
+import peerlink.peerlink.security.RegisterService;
 
 @RestController
 class RegisterController {

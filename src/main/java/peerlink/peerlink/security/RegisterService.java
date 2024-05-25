@@ -1,4 +1,4 @@
-package peerlink.peerlink.services;
+package peerlink.peerlink.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,7 +16,7 @@ public class RegisterService {
     PasswordEncoder passwordEncoder;
 
     private void checkDuplicate(User user) {
-        if (userRepo.findUserByUsername(user.getUsername()) != null) {
+        if (userRepo.findUserByUsername(user.getUsername()).isPresent()) {
             throw new DuplicateUserException();
         }
     }

@@ -1,4 +1,4 @@
-package peerlink.peerlink.services;
+package peerlink.peerlink.security;
 
 public class DuplicateUserException extends RuntimeException {
     public DuplicateUserException() {
