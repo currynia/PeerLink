@@ -1,35 +1,36 @@
 package peerlink.peerlink.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import peerlink.peerlink.controllers.response.Response;
 import peerlink.peerlink.db.model.User;
 import peerlink.peerlink.security.DuplicateUserException;
 import peerlink.peerlink.security.RegisterService;
 
 @RestController
 class RegisterController {
-    private static final String RESPONSE_SUCCESS = "{'status':'success', 'message':null,}";
-    private static final String DUPLICATE_USER = "{'status':'fail', 'message':'user exists',}";
-    private static final String DUPLICATE_EMAIL = "{'status':'fail', 'message':'email exists',}";
-    private static final String FAIL = "{'status':'fail', 'message':'failed due to an internal error',}";
+    private static final ObjectMapper mapper = new ObjectMapper();
+
     @Autowired
     RegisterService registerService;
 
     @PostMapping(value = "/api/register", consumes = "application/json")
-    private String register(@RequestBody User user) {
+    private Response register(@RequestBody User user) {
         try {
             registerService.registerUser(user);
-            return RESPONSE_SUCCESS;
+            return Response.getResponseSuccess();
         } catch (DuplicateUserException e) {
-            return DUPLICATE_USER;
+            return Response.getDuplicateEmail();
         } catch (DuplicateKeyException e) {
-            return DUPLICATE_EMAIL;
+            return Response.getDuplicateUser();
         } catch (IllegalArgumentException e) {
-            return FAIL;
+            return Response.getServerError();
         }
+
     }
 
 }
