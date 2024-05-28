@@ -7,6 +7,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import peerlink.peerlink.controllers.response.Response;
 import peerlink.peerlink.db.repository.UserRepository;
 
 @RestController
@@ -18,12 +20,13 @@ class LoginController {
     private UserRepository userRepo;
 
     @PostMapping(value = "/api/login", consumes = "application/json")
-    private String login(@RequestBody LoginData loginData) {
+    private Response login(@RequestBody LoginData loginData) {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginData.username, loginData.password));
-            return "success";
+            authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(loginData.username, loginData.password));
+            return Response.getLoginSuccessful();
         } catch (BadCredentialsException e) {
-            return "fail";
+            return Response.getLoginFail();
         }
     }
 

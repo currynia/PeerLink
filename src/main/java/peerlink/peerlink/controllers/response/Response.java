@@ -4,10 +4,6 @@ import lombok.Getter;
 
 @Getter
 public class Response {
-    private Integer code;
-    private String message;
-    private String status;
-
     @Getter
     private static final Response responseSuccess = new ResponseSuccess();
 
@@ -18,11 +14,17 @@ public class Response {
     private static final Response duplicateEmail = new DuplicateUser();
 
     @Getter
+    private static final Response loginSuccessful = new LoginSuccessful();
+
+    @Getter
+    private static final Response loginFail = new LoginFail();
+
+    @Getter
     private static final Response serverError = new ServerError();
 
-    public Response() {
-
-    };
+    private final Integer code;
+    private final String message;
+    private final String status;
 
     private Response(Integer code, String message, String status) {
         this.code = code;
@@ -55,6 +57,20 @@ public class Response {
 
         private ServerError() {
             super(500, "Internal server error encountered", "fail");
+        }
+    }
+
+    private static class LoginFail extends Response {
+
+        private LoginFail() {
+            super(401, "Invalid username or password", "fail");
+        }
+    }
+
+    private static class LoginSuccessful extends Response {
+
+        private LoginSuccessful() {
+            super(200, "Login success", "success");
         }
     }
 
