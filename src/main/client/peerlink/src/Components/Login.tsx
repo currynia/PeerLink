@@ -7,7 +7,7 @@ import {
   Typography,
   TextField,
   Button,
-  Grid,
+  Grid
 } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -20,11 +20,12 @@ const Login = () => {
 
   return (
     <>
-      <Container maxWidth="xs">
+      <Container maxWidth="xl">
         <CssBaseline />
         <Box
           sx={{
-            mt: 20,
+            mt: 0,
+            ml: 60,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
