@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { LockOutlined } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import {
   Container,
   CssBaseline,
@@ -26,6 +26,7 @@ const Register: React.FC = () => {
     const [faculty, setFaculty] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    const navigate = useNavigate();
   
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -73,6 +74,8 @@ const Register: React.FC = () => {
           setAge('');
           setGender('');
           setFaculty('');
+          navigate('/login');
+
         } catch (error) {
           setErrorMessage(`Registration failed: ${(error as Error).message}`);
         }

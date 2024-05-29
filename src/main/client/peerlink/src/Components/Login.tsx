@@ -13,10 +13,30 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleLogin = () => {};
+  const loginData = {
+    username,
+    password,
+  };
+  const handleLogin = async () => {
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(loginData),
+      }).then((response) => response.json());
+      if (response.value == 200) {
+        console.log("login successful");
+      } else {
+        throw Error(response.message);
+      }
+    } catch (error) {
+      console.log((error as Error).message);
+    }
+  };
 
   return (
     <>
@@ -44,8 +64,8 @@ const Login = () => {
               label="Email Address"
               name="email"
               autoFocus
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
 
             <TextField
