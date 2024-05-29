@@ -1,8 +1,13 @@
+import NavDrawer from "./ui/NavDrawer";
+import TopBar from "./ui/TopBar";
 
 const Home = () => {
-    return (
-        <div> Home</div>
-    )
-}
+  return (
+    <>
+      <TopBar landing={false} />
+      <NavDrawer />
+    </>
+  );
+};
 
-export default Home
+export default Home;

@@ -1,4 +1,4 @@
-import { Paper, Box, Button } from "@mui/material/";
+import { AppBar, Box, Button, Paper } from "@mui/material/";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
@@ -27,14 +27,27 @@ const TopBar = (props: Props) => {
   );
   return (
     <>
-      <Paper
-        sx={{ display: "flex", alignItems: "center", padding: 1 }}
-        variant="elevation"
-        elevation={2}
+      <AppBar
+        sx={{
+          height: 30,
+          margin: 0,
+          width: 1,
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+        elevation={0}
       >
-        <text>Peerlink</text>
-        <Box sx={{ marginLeft: "auto" }}>{props.landing && button}</Box>
-      </Paper>
+        <Paper
+          square={true}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            padding: 1,
+          }}
+        >
+          <p>Peerlink</p>
+          <Box sx={{ marginLeft: "auto" }}>{props.landing && button}</Box>
+        </Paper>
+      </AppBar>
     </>
   );
 };

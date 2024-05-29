@@ -4,7 +4,10 @@ import TopBar from "./ui/TopBar";
 const Landing = () => {
   return (
     <>
-      <TopBar landing={true} />
+      <div style={{ marginBottom: 80 }}>
+        <TopBar landing={true} />
+      </div>
+
       <Container maxWidth={false} sx={{ textAlign: "center" }}>
         <h1 style={{ fontSize: 64 }}>PeerLink</h1>
         <small>
