@@ -87,7 +87,7 @@ const Register: React.FC = () => {
             <Box
               sx={{
                 mt:0,
-                ml:48,
+                ml:'auto',
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
