@@ -1,9 +1,8 @@
-import { LockOutlined } from "@mui/icons-material";
+//import { LockOutlined } from "@mui/icons-material";
 import {
   Container,
   CssBaseline,
   Box,
-  Avatar,
   Typography,
   TextField,
   Button,
@@ -50,9 +49,6 @@ const Login = () => {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
-            <LockOutlined />
-          </Avatar>
           <Typography variant="h5">Login</Typography>
           <Box sx={{ mt: 1 }}>
             <TextField
