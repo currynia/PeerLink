@@ -1,15 +1,17 @@
-//import { LockOutlined } from "@mui/icons-material";
+import { LockOutlined } from "@mui/icons-material";
 import {
   Container,
   CssBaseline,
   Box,
+  Avatar,
   Typography,
   TextField,
   Button,
-  Grid,
+  Grid
 } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
+
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -18,6 +20,7 @@ const Login = () => {
     username,
     password,
   };
+  const navigate = useNavigate();
   const handleLogin = async () => {
     try {
       const response = await fetch("/api/login", {
@@ -29,6 +32,7 @@ const Login = () => {
       }).then((response) => response.json());
       if (response.value == 200) {
         console.log("login successful");
+        navigate('/Home');
       } else {
         throw Error(response.message);
       }
@@ -39,16 +43,20 @@ const Login = () => {
 
   return (
     <>
-      <Container maxWidth="xs">
+      <Container maxWidth="xl">
         <CssBaseline />
         <Box
           sx={{
-            mt: 20,
+            mt: 0,
+            ml: 60,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
           }}
         >
+          <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
+            <LockOutlined />
+          </Avatar>
           <Typography variant="h5">Login</Typography>
           <Box sx={{ mt: 1 }}>
             <TextField
