@@ -7,11 +7,10 @@ import {
   Typography,
   TextField,
   Button,
-  Grid
+  Grid,
 } from "@mui/material";
 import { useState } from "react";
-import { Link, useNavigate} from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -22,17 +21,16 @@ const Login = () => {
   };
   const navigate = useNavigate();
   const handleLogin = async () => {
+    const response = await fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginData),
+    }).then((response) => response.json());
     try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(loginData),
-      }).then((response) => response.json());
-      if (response.value == 200) {
-        console.log("login successful");
-        navigate('/Home');
+      if (response.code == 201) {
+        navigate("/home");
       } else {
         throw Error(response.message);
       }
@@ -48,7 +46,7 @@ const Login = () => {
         <Box
           sx={{
             mt: 20,
-            ml: 'auto',
+            ml: "auto",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
