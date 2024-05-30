@@ -12,7 +12,11 @@ import {
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const Login = () => {
+interface Props {
+  onLogin: () => void;
+}
+
+const Login = (props: Props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const loginData = {
@@ -30,7 +34,8 @@ const Login = () => {
     }).then((response) => response.json());
     try {
       if (response.code == 201) {
-        navigate("/home");
+        props.onLogin();
+        navigate("/app");
       } else {
         throw Error(response.message);
       }

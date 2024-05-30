@@ -1,13 +1,14 @@
 package peerlink.peerlink.security;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import peerlink.peerlink.db.model.User;
-
 import java.util.Collection;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import lombok.Getter;
+import lombok.Setter;
+import peerlink.peerlink.db.model.User;
 
 @Getter
 @Setter
