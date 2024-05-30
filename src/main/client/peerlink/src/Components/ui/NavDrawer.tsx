@@ -24,17 +24,16 @@ const NavDrawer = () => {
   return (
     <Drawer
       sx={{
-        width: drawerWidth,
         flexShrink: 0,
         [`& .MuiDrawer-paper`]: {
           width: drawerWidth,
           boxSizing: "border-box",
+          position: "relative",
         },
       }}
       variant="permanent"
       anchor="left"
     >
-      <Toolbar />
       <List>
         {["Profile", "Match", "Sessions", "ToDo", "Settings"].map(
           (text, index) => (

@@ -8,7 +8,7 @@ interface Props {
 const TopBar = (props: Props) => {
   const navigate = useNavigate();
   const button = (
-    <Box>
+    <Box marginRight={2.5}>
       <Button
         sx={{ marginRight: 1 }}
         variant="outlined"
@@ -30,9 +30,9 @@ const TopBar = (props: Props) => {
       <AppBar
         sx={{
           height: 30,
-          margin: 0,
           width: 1,
           zIndex: (theme) => theme.zIndex.drawer + 1,
+          position: "relative",
         }}
         elevation={0}
       >
@@ -41,7 +41,6 @@ const TopBar = (props: Props) => {
           sx={{
             display: "flex",
             alignItems: "center",
-            padding: 1,
           }}
         >
           <p>Peerlink</p>
