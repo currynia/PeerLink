@@ -33,3 +33,12 @@ build/
 .vscode/
 
 /src/main/resources/static/
+
+env.properties
+
+/src/main/resources/peerlink.p12
+
+node_modules/
+
+
+
