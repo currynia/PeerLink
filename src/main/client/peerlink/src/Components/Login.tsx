@@ -67,7 +67,7 @@ const Login = (props: Props) => {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Email Address/Username"
               name="email"
               autoFocus
               value={username}

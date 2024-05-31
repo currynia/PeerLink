@@ -5,10 +5,11 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import peerlink.peerlink.controllers.response.Response;
+
 import peerlink.peerlink.db.model.User;
 import peerlink.peerlink.security.DuplicateUserException;
 import peerlink.peerlink.security.RegisterService;
+import peerlink.peerlink.security.Response;
 
 @RestController
 class RegisterController {
