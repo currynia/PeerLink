@@ -6,13 +6,12 @@ import peerlink.peerlink.db.model.User;
 
 import java.util.Optional;
 
-
 public interface UserRepository extends MongoRepository<User, String> {
     @Query("{username:'?0'}")
     Optional<User> findUserByUsername(String username);
 
     @Query("{email:'?0'}")
-    User findUserByEmail(String email);
+    Optional<User> findUserByEmail(String email);
 
     long count();
 

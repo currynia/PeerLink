@@ -1,4 +1,4 @@
-package peerlink.peerlink.controllers.response;
+package peerlink.peerlink.security;
 
 import lombok.Getter;
 
