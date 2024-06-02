@@ -12,11 +12,7 @@ import {
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-interface Props {
-  onLogin: () => void;
-}
-
-const Login = (props: Props) => {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const loginData = {
@@ -34,7 +30,6 @@ const Login = (props: Props) => {
     }).then((response) => response.json());
     try {
       if (response.code == 201) {
-        props.onLogin();
         navigate("/app");
       } else {
         throw Error(response.message);
@@ -66,15 +61,9 @@ const Login = (props: Props) => {
               margin="normal"
               required
               fullWidth
-<<<<<<< HEAD
-              id="Username"
-              label="Username"
-              name="Username"
-=======
               id="email"
               label="Email Address/Username"
               name="email"
->>>>>>> d9ab1f26367d92bef896851af868ef48d31740e5
               autoFocus
               value={username}
               onChange={(e) => setUsername(e.target.value)}

@@ -3,31 +3,28 @@ import NavDrawer from "./ui/NavDrawer";
 import TopBar from "./ui/TopBar";
 import { useEffect } from "react";
 
-interface Props {
-  role: string;
-}
-const Home = (props: Props) => {
+const Home = () => {
   const navigate = useNavigate();
-  useEffect(() => {
-    if (props.role !== "USER") {
-      navigate("/");
-    }
-  }, [props.role, navigate]);
+  // useEffect(() => {
+  //   if (props.role !== "USER") {
+  //     navigate("/");
+  //   }
+  // }, [props.role, navigate]);
 
-  if (props.role == "USER") {
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          rowGap: 30,
-        }}
-      >
-        <TopBar landing={false} />
-        <NavDrawer />
-      </div>
-    );
-  }
+  // if (props.role == "USER") {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        rowGap: 30,
+      }}
+    >
+      <TopBar landing={false} />
+      <NavDrawer />
+    </div>
+  );
 };
+//};
 
 export default Home;

@@ -1,48 +1,35 @@
 package peerlink.peerlink.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import peerlink.peerlink.db.repository.UserRepository;
+import peerlink.peerlink.db.model.User;
+import peerlink.peerlink.dto.LoginDto;
 import peerlink.peerlink.security.Response;
+import peerlink.peerlink.security.jwt.JwtService;
+import peerlink.peerlink.services.AuthenticationService;
+
 
 @RestController
 class LoginController {
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private JwtService jwtService;
 
     @Autowired
-    private UserRepository userRepository;
+    AuthenticationService authService;
 
     @PostMapping(value = "/api/login", consumes = "application/json")
-    private Response login(@RequestBody LoginData loginData) {
+    private Response login(@RequestBody LoginDto loginDto) {
         try {
-
-            loginData.username = loginData.username.contains("@")
-                    ? userRepository.findUserByEmail(loginData.username).get().getUsername()
-                    : loginData.username;
-
-            authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(loginData.username, loginData.password));
-            return Response.getResponseSuccess();
+            User user = authService.authenticateLogin(loginDto);
+            String jwtToken = jwtService.generateToken(user);
+            return Response.loginSuccess(user);
         } catch (BadCredentialsException e) {
-            return Response.getLoginFail();
+            return Response.loginFail();
         }
     }
 
-    private static class LoginData {
-        private String username;
-        private final String password;
 
-        @SuppressWarnings("unused")
-        public LoginData(String username, String password) {
-            this.username = username;
-            this.password = password;
-        }
-    }
 }
