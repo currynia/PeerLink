@@ -66,9 +66,15 @@ const Login = (props: Props) => {
               margin="normal"
               required
               fullWidth
+<<<<<<< HEAD
+              id="Username"
+              label="Username"
+              name="Username"
+=======
               id="email"
-              label="Email Address"
+              label="Email Address/Username"
               name="email"
+>>>>>>> d9ab1f26367d92bef896851af868ef48d31740e5
               autoFocus
               value={username}
               onChange={(e) => setUsername(e.target.value)}

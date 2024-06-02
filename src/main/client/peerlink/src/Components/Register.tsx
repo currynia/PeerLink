@@ -51,34 +51,37 @@ const Register: React.FC = () => {
       faculty,
     };
 
+    const response = await fetch("/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(registrationData),
+    }).then((response) => response.json());;
+
+    // if (!response.ok) {
+    //   throw new Error("Backend was not ok");
+    // }
     try {
-      const response = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(registrationData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Backend was not ok");
-      }
-
-      //const data = await response.json();
-      setSuccessMessage("Registration successful!");
-      // Clear form fields after successful registration
-      setUsername("");
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
-      setAge("");
-      setGender("");
-      setFaculty("");
-      navigate("/login");
-    } catch (error) {
+      if (response.code ==201) {
+        //const data = await response.json();
+        setSuccessMessage("Registration successful!");
+        // Clear form fields after successful registration
+        setUsername("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+        setAge("");
+        setGender("");
+        setFaculty("");
+        navigate("/login");
+        } else {
+          throw Error(response.message);
+        } 
+      } catch (error) {
       setErrorMessage(`Registration failed: ${(error as Error).message}`);
-    }
-  };
+      }
+    };
   return (
     <>
       <Container maxWidth="lg">
@@ -100,11 +103,11 @@ const Register: React.FC = () => {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                  name="name"
+                  name="Username"
                   required
                   fullWidth
-                  id="name"
-                  label="Name"
+                  id="Username"
+                  label="Username"
                   autoFocus
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
