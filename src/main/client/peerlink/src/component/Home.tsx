@@ -1,30 +1,36 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Authentication } from "../Auth/Authentication";
 import NavDrawer from "./ui/NavDrawer";
-import TopBar from "./ui/TopBar";
-import { useEffect } from "react";
 
-const Home = () => {
+interface Props {
+  showRegisterLogin: (bool: boolean) => void;
+}
+const Home = (props: Props) => {
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (props.role !== "USER") {
-  //     navigate("/");
-  //   }
-  // }, [props.role, navigate]);
+  const [auth, setAuth] = useState(true);
 
-  // if (props.role == "USER") {
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        rowGap: 30,
-      }}
-    >
-      <TopBar landing={false} />
-      <NavDrawer />
-    </div>
-  );
+  useEffect(() => {
+    Authentication.authenticate(setAuth);
+  }, []);
+
+  if (auth) {
+    props.showRegisterLogin(false);
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          rowGap: 30,
+        }}
+      >
+        <NavDrawer />
+      </div>
+    );
+  } else {
+    props.showRegisterLogin(true);
+    navigate("/");
+  }
 };
-//};
 
 export default Home;

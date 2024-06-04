@@ -2,7 +2,7 @@ import { AppBar, Box, Button, Paper } from "@mui/material/";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
-  landing: boolean;
+  showRegisterLogin: boolean;
 }
 
 const TopBar = (props: Props) => {
@@ -44,7 +44,9 @@ const TopBar = (props: Props) => {
           }}
         >
           <p>Peerlink</p>
-          <Box sx={{ marginLeft: "auto" }}>{props.landing && button}</Box>
+          <Box sx={{ marginLeft: "auto" }}>
+            {props.showRegisterLogin && button}
+          </Box>
         </Paper>
       </AppBar>
     </>

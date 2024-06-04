@@ -1,6 +1,8 @@
-import TopBar from "./ui/TopBar";
-
-const Landing = () => {
+interface Props {
+  setbarState: (val: boolean) => void;
+}
+const Landing = (props: Props) => {
+  props.setbarState(true);
   return (
     <>
       <div
@@ -11,7 +13,6 @@ const Landing = () => {
           flexDirection: "column",
         }}
       >
-        <TopBar landing={true} />
         <h1 style={{ fontSize: 64 }}>PeerLink</h1>
         <small>
           Welcome to PeerLink. Sign up or login to get started and look for
