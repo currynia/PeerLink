@@ -2,7 +2,6 @@ package peerlink.peerlink.security.jwt;
 
 import lombok.Getter;
 import lombok.Setter;
-import peerlink.peerlink.db.model.User;
 
 @Getter
 @Setter

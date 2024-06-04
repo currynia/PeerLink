@@ -1,36 +1,51 @@
 package peerlink.peerlink.services;
 
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+import io.jsonwebtoken.security.SignatureException;
 import peerlink.peerlink.db.model.User;
 import peerlink.peerlink.db.repository.UserRepository;
-import peerlink.peerlink.dto.LoginDto;
+import peerlink.peerlink.security.jwt.JwtService;
+import peerlink.peerlink.security.jwt.JwtToken;
 
 @Service
 public class AuthenticationService {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+        @Autowired
+        private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private UserRepository userRepository;
+        @Autowired
+        private UserRepository userRepository;
 
-    public User authenticateLogin(LoginDto loginDto) throws BadCredentialsException {
-        try {
-            User user = loginDto.getUsername().contains("@")
-                    ? userRepository.findUserByEmail(loginDto.getUsername()).get()
-                    : userRepository.findUserByUsername(loginDto.getUsername()).get();
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    user.getUsername(), loginDto.getPassword()));
-            return user;
+        @Autowired
+        private JwtService jwtService;
 
-        } catch (BadCredentialsException e) {
-            throw new BadCredentialsException(null);
+        public Pair<User, JwtToken> authenticateLogin(String username, String password)
+                        throws BadCredentialsException {
+
+
+                User user = username.contains("@") ? userRepository.findUserByEmail(username).get()
+                                : userRepository.findUserByUsername(username).get();
+
+                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                                user.getUsername(), password));
+
+                return Pair.of(user, new JwtToken(jwtService.generateToken(user),
+                                jwtService.getExpirationTime()));
+
+
         }
 
-    }
+        public Pair<User, JwtToken> authenticateToken(String token) throws SignatureException {
+                User user = userRepository.findUserByUsername(jwtService.extractUsername(token))
+                                .get();
+                return Pair.of(user, new JwtToken(jwtService.generateToken(user),
+                                jwtService.getExpirationTime()));
+
+
+        }
 }

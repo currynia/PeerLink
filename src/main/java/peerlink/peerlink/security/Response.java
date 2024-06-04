@@ -2,6 +2,7 @@ package peerlink.peerlink.security;
 
 import lombok.Getter;
 import peerlink.peerlink.db.model.User;
+import peerlink.peerlink.security.jwt.JwtToken;
 
 @Getter
 public class Response {
@@ -10,22 +11,25 @@ public class Response {
     private final String message;
     private final String status;
     private User user;
+    private JwtToken token;
 
-    public Response(Integer code, String message, String status) {
+    private Response(Integer code, String message, String status) {
         this.code = code;
         this.message = message;
         this.status = status;
     }
 
-    public Response(Integer code, String message, String status, User user) {
+    private Response(Integer code, String message, String status, User user, JwtToken token) {
         this.code = code;
         this.message = message;
         this.status = status;
         this.user = user;
+        this.token = token;
     }
 
-    public static Response loginSuccess(User user) {
-        return new Response(201, "", "success", user);
+
+    public static Response authenticationSuccess(User user, JwtToken token) {
+        return new Response(201, "", "success", user, token);
     }
 
     public static Response responseSuccess() {
@@ -52,6 +56,11 @@ public class Response {
     public static Response loginUnsuccessful() {
         return new Response(200, "Login success", "success");
     }
+
+    public static Response unauthenticatedError() {
+        return new Response(401, "authentication fail", "fail");
+    }
+
 
 
 }
