@@ -28,9 +28,10 @@ const Login = () => {
     const handleLogin = async () => {
       const response = await ApiAccess.authenticateLogin(loginData);
       try {
-        if (response.code == 201) {
+        if (response.code === 201) {
           localStorage.setItem("token", response.token.token);
           ApiAccess.setAuthenticated(true);
+          sessionStorage.setItem("user", JSON.stringify(response.user));
           navigate("/app");
         } else {
           throw Error(response.message);

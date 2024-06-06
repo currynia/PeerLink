@@ -23,17 +23,18 @@ export class ApiAccess {
         const response = await ApiAccess.authenticateJwt();
         if (response.code == 201) {
           ApiAccess.setAuthenticated(true);
+          sessionStorage.setItem("user", JSON.stringify(response.user));
         }
         setAuth(ApiAccess.getAuthenticated());
       })();
     }
   }
 
-  static retrieveTasks(username: string): any {
-    return fetch("/api/tasks", {
-      method: "GET",
+  static retrieveTasks(username: string): Promise<Array<string>> {
+    return fetch("/api/getTasks", {
+      method: "POST",
       body: username,
-    }).then((response) => response.json);
+    }).then((response) => response.json());
   }
   static setAuthenticated(bool: boolean) {
     this.authenticated = bool;
