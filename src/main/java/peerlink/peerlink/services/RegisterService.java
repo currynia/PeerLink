@@ -1,10 +1,11 @@
-package peerlink.peerlink.security;
+package peerlink.peerlink.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import peerlink.peerlink.db.model.User;
 import peerlink.peerlink.db.repository.UserRepository;
+import peerlink.peerlink.security.DuplicateUserException;
 
 @Service
 public class RegisterService {

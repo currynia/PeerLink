@@ -1,20 +1,21 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Authentication } from "../Auth/Authentication";
 import NavDrawer from "./ui/NavDrawer";
-import TopBar from "./ui/TopBar";
-import { useEffect } from "react";
 
 interface Props {
-  role: string;
+  showRegisterLogin: (bool: boolean) => void;
 }
 const Home = (props: Props) => {
   const navigate = useNavigate();
-  useEffect(() => {
-    if (props.role !== "USER") {
-      navigate("/");
-    }
-  }, [props.role, navigate]);
+  const [auth, setAuth] = useState(true);
 
-  if (props.role == "USER") {
+  useEffect(() => {
+    Authentication.authenticate(setAuth);
+  }, []);
+
+  if (auth) {
+    props.showRegisterLogin(false);
     return (
       <div
         style={{
@@ -23,10 +24,12 @@ const Home = (props: Props) => {
           rowGap: 30,
         }}
       >
-        <TopBar landing={false} />
         <NavDrawer />
       </div>
     );
+  } else {
+    props.showRegisterLogin(true);
+    navigate("/");
   }
 };
 

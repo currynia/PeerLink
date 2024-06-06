@@ -1,117 +1,110 @@
 import { LockOutlined } from "@mui/icons-material";
 import {
+  Avatar,
+  Box,
+  Button,
   Container,
   CssBaseline,
-  Box,
-  Avatar,
-  Typography,
-  TextField,
-  Button,
   Grid,
+  TextField,
+  Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Authentication, LoginData } from "../Auth/Authentication";
 
-interface Props {
-  onLogin: () => void;
-}
-
-const Login = (props: Props) => {
+const Login = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const loginData = {
-    username,
-    password,
-  };
-  const navigate = useNavigate();
-  const handleLogin = async () => {
-    const response = await fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(loginData),
-    }).then((response) => response.json());
-    try {
-      if (response.code == 201) {
-        props.onLogin();
-        navigate("/app");
-      } else {
-        throw Error(response.message);
+  const [auth, setAuth] = useState(false);
+  const loginData: LoginData = { username, password };
+
+  useEffect(() => {
+    Authentication.authenticate(setAuth);
+  }, []);
+
+  if (!auth) {
+    const handleLogin = async () => {
+      const response = await Authentication.authenticateLogin(loginData);
+      try {
+        if (response.code == 201) {
+          localStorage.setItem("token", response.token.token);
+          Authentication.setAuthenticated(true);
+          navigate("/app");
+        } else {
+          throw Error(response.message);
+        }
+      } catch (error) {
+        console.log((error as Error).message);
       }
-    } catch (error) {
-      console.log((error as Error).message);
-    }
-  };
+    };
 
-  return (
-    <>
-      <Container maxWidth="xl">
-        <CssBaseline />
-        <Box
-          sx={{
-            mt: 20,
-            ml: "auto",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
-            <LockOutlined />
-          </Avatar>
-          <Typography variant="h5">Login</Typography>
-          <Box sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-<<<<<<< HEAD
-              id="Username"
-              label="Username"
-              name="Username"
-=======
-              id="email"
-              label="Email Address/Username"
-              name="email"
->>>>>>> d9ab1f26367d92bef896851af868ef48d31740e5
-              autoFocus
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
+    return (
+      <>
+        <Container maxWidth="xl">
+          <CssBaseline />
+          <Box
+            sx={{
+              mt: 20,
+              ml: "auto",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: "primary.light" }}>
+              <LockOutlined />
+            </Avatar>
+            <Typography variant="h5">Login</Typography>
+            <Box sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address/Username"
+                name="email"
+                autoFocus
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
 
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="password"
-              name="password"
-              label="Password"
-              type="password"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="password"
+                name="password"
+                label="Password"
+                type="password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
 
-            <Button
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={handleLogin}
-            >
-              Login
-            </Button>
-            <Grid container justifyContent={"flex-end"}>
-              <Grid item>
-                <Link to="/register">Don't have an account? Register</Link>
+              <Button
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                onClick={handleLogin}
+              >
+                Login
+              </Button>
+              <Grid container justifyContent={"flex-end"}>
+                <Grid item>
+                  <Link to="/register">Don't have an account? Register</Link>
+                </Grid>
               </Grid>
-            </Grid>
+            </Box>
           </Box>
-        </Box>
-      </Container>
-    </>
-  );
+        </Container>
+      </>
+    );
+  } else {
+    navigate("/app");
+  }
 };
 
 export default Login;

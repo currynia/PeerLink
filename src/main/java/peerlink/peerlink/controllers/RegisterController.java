@@ -5,11 +5,10 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import peerlink.peerlink.db.model.User;
 import peerlink.peerlink.security.DuplicateUserException;
-import peerlink.peerlink.security.RegisterService;
 import peerlink.peerlink.security.Response;
+import peerlink.peerlink.services.RegisterService;
 
 @RestController
 class RegisterController {
@@ -20,13 +19,13 @@ class RegisterController {
     private Response register(@RequestBody User user) {
         try {
             registerService.registerUser(user);
-            return Response.getResponseSuccess();
+            return Response.responseSuccess();
         } catch (DuplicateUserException e) {
-            return Response.getDuplicateEmail();
+            return Response.duplicateEmail();
         } catch (DuplicateKeyException e) {
-            return Response.getDuplicateUser();
+            return Response.duplicateUser();
         } catch (IllegalArgumentException e) {
-            return Response.getServerError();
+            return Response.serverError();
         }
 
     }

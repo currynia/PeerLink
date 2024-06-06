@@ -1,23 +1,40 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "./Components/Login";
-import Register from "./Components/Register";
-import Landing from "./Components/Landing";
-import Home from "./Components/Home";
 import { useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./component/Home";
+import Landing from "./component/Landing";
+import Login from "./component/Login";
+import Register from "./component/Register";
+import TopBar from "./component/ui/TopBar";
 
 function App() {
-  const [role, setRole] = useState("");
+  const home = "/app";
+  const [showRegisterLogin, setShowRegisterLogin] = useState(true);
+  const updateRegisterLoginButton = (val: boolean) => {
+    setShowRegisterLogin(val);
+  };
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route
-          path="/login"
-          element={<Login onLogin={() => setRole("USER")} />}
-        />
-        <Route path="/register" element={<Register />} />
-        <Route path="/app" element={<Home role={role} />} />
-      </Routes>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          rowGap: 30,
+        }}
+      >
+        <TopBar showRegisterLogin={showRegisterLogin} />
+        <Routes>
+          <Route
+            path={"/"}
+            element={<Landing setbarState={updateRegisterLoginButton} />}
+          />
+          <Route path={"/login"} element={<Login />} />
+          <Route path={"/register"} element={<Register />} />
+          <Route
+            path={home}
+            element={<Home showRegisterLogin={updateRegisterLoginButton} />}
+          />
+        </Routes>
+      </div>
     </BrowserRouter>
   );
 }

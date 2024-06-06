@@ -9,10 +9,13 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
 const NavDrawer = () => {
+  const navigate = useNavigate();
+  const paths = ["profile", "match", "sessions", "task", "settings"];
   const icons = [
     <AccountCircleIcon />,
     <PeopleIcon />,
@@ -38,7 +41,9 @@ const NavDrawer = () => {
           (text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
-                <ListItemIcon>{icons[index]}</ListItemIcon>
+                <ListItemIcon onClick={() => console.log("ASD")}>
+                  {icons[index]}
+                </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
             </ListItem>
