@@ -16,13 +16,14 @@ public class ToDoTaskController {
     @Autowired
     private ToDoTaskService taskService;
 
-    @GetMapping("/api/getTasks")
+    @PostMapping("/api/getTasks")
     private List<String> getTasks(@RequestBody String username) {
         return taskService.getTasks(username);
     }
 
     @PostMapping("/api/addTasks")
     private Response addTasks(@RequestBody TasksDto tasks) {
-        return taskService.addTasks(tasks) == null ? Response.responseSuccess() : Response.serverError();
+        return taskService.addTasks(tasks) == null ? Response.responseSuccess()
+                : Response.serverError();
     }
 }
