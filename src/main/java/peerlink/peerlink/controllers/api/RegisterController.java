@@ -1,4 +1,4 @@
-package peerlink.peerlink.controllers;
+package peerlink.peerlink.controllers.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;

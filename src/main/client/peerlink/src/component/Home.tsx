@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Authentication } from "../Auth/Authentication";
+import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
+import { ApiAccess } from "../api/ApiAccess";
 import NavDrawer from "./ui/NavDrawer";
+import TaskList from "./feature/TaskList";
 
 interface Props {
   showRegisterLogin: (bool: boolean) => void;
@@ -11,7 +12,7 @@ const Home = (props: Props) => {
   const [auth, setAuth] = useState(true);
 
   useEffect(() => {
-    Authentication.authenticate(setAuth);
+    ApiAccess.authenticate(setAuth);
   }, []);
 
   if (auth) {
@@ -20,11 +21,11 @@ const Home = (props: Props) => {
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
-          rowGap: 30,
+          flexDirection: "row",
         }}
       >
         <NavDrawer />
+        <Outlet />
       </div>
     );
   } else {

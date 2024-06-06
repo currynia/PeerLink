@@ -2,13 +2,14 @@ package peerlink.peerlink.db.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import java.util.Collection;
-import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Setter
 @Getter
@@ -28,10 +29,13 @@ public class User implements UserDetails {
 
     private String major;
 
-    private String tasks;
+    private List<String> tasks;
 
-    public User(String username, String email, String password, int age, String gender,
-            String major) {
+    public User() {
+    }
+    
+    private User(String username, String email, String password, int age, String gender,
+                 String major) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -68,5 +72,18 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", age=" + age +
+                ", gender='" + gender + '\'' +
+                ", major='" + major + '\'' +
+                ", tasks=" + tasks +
+                '}';
     }
 }

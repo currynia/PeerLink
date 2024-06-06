@@ -1,4 +1,4 @@
-export class Authentication {
+export class ApiAccess {
   private static authenticated = false;
   static authenticateLogin(loginData: LoginData): any {
     return fetch("/api/login", {
@@ -18,15 +18,22 @@ export class Authentication {
   }
 
   static authenticate(setAuth: (bool: boolean) => void): void {
-    if (!Authentication.getAuthenticated()) {
+    if (!ApiAccess.getAuthenticated()) {
       (async () => {
-        const response = await Authentication.authenticateJwt();
+        const response = await ApiAccess.authenticateJwt();
         if (response.code == 201) {
-          Authentication.setAuthenticated(true);
+          ApiAccess.setAuthenticated(true);
         }
-        setAuth(Authentication.getAuthenticated());
+        setAuth(ApiAccess.getAuthenticated());
       })();
     }
+  }
+
+  static retrieveTasks(username: string): any {
+    return fetch("/api/tasks", {
+      method: "GET",
+      body: username,
+    }).then((response) => response.json);
   }
   static setAuthenticated(bool: boolean) {
     this.authenticated = bool;

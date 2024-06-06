@@ -1,4 +1,4 @@
-package peerlink.peerlink.controllers;
+package peerlink.peerlink.controllers.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
@@ -12,7 +12,6 @@ import peerlink.peerlink.security.Response;
 import peerlink.peerlink.security.jwt.JwtToken;
 import peerlink.peerlink.services.AuthenticationService;
 
-
 @RestController
 class LoginController {
 
@@ -23,8 +22,8 @@ class LoginController {
     private Response login(@RequestBody LoginDto loginDto) {
         try {
 
-            Pair<User, JwtToken> userTokenPair =
-                    authService.authenticateLogin(loginDto.getUsername(), loginDto.getPassword());
+            Pair<User, JwtToken> userTokenPair = authService.authenticateLogin(loginDto.getUsername(),
+                    loginDto.getPassword());
 
             return Response.authenticationSuccess(userTokenPair.getFirst(),
                     userTokenPair.getSecond());
@@ -32,6 +31,5 @@ class LoginController {
             return Response.loginFail();
         }
     }
-
 
 }

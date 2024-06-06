@@ -13,6 +13,9 @@ public interface UserRepository extends MongoRepository<User, String> {
     @Query("{email:'?0'}")
     Optional<User> findUserByEmail(String email);
 
+    @Query(value = "{username:'?0'}", fields = "{tasks : 1}")
+    User findUserTasks(String username);
+
     long count();
 
 }

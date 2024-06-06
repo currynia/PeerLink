@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Authentication, LoginData } from "../Auth/Authentication";
+import { ApiAccess, LoginData } from "../api/ApiAccess";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -21,16 +21,16 @@ const Login = () => {
   const loginData: LoginData = { username, password };
 
   useEffect(() => {
-    Authentication.authenticate(setAuth);
+    ApiAccess.authenticate(setAuth);
   }, []);
 
   if (!auth) {
     const handleLogin = async () => {
-      const response = await Authentication.authenticateLogin(loginData);
+      const response = await ApiAccess.authenticateLogin(loginData);
       try {
         if (response.code == 201) {
           localStorage.setItem("token", response.token.token);
-          Authentication.setAuthenticated(true);
+          ApiAccess.setAuthenticated(true);
           navigate("/app");
         } else {
           throw Error(response.message);

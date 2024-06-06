@@ -5,6 +5,7 @@ import Landing from "./component/Landing";
 import Login from "./component/Login";
 import Register from "./component/Register";
 import TopBar from "./component/ui/TopBar";
+import TaskList from "./component/feature/TaskList";
 
 function App() {
   const home = "/app";
@@ -32,7 +33,9 @@ function App() {
           <Route
             path={home}
             element={<Home showRegisterLogin={updateRegisterLoginButton} />}
-          />
+          >
+            <Route path={"tasks"} element={<TaskList />} />
+          </Route>
         </Routes>
       </div>
     </BrowserRouter>

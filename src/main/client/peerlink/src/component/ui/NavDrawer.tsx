@@ -15,7 +15,7 @@ const drawerWidth = 240;
 
 const NavDrawer = () => {
   const navigate = useNavigate();
-  const paths = ["profile", "match", "sessions", "task", "settings"];
+  const paths = ["profile", "match", "sessions", "tasks", "settings"];
   const icons = [
     <AccountCircleIcon />,
     <PeopleIcon />,
@@ -40,10 +40,8 @@ const NavDrawer = () => {
         {["Profile", "Match", "Sessions", "ToDo", "Settings"].map(
           (text, index) => (
             <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon onClick={() => console.log("ASD")}>
-                  {icons[index]}
-                </ListItemIcon>
+              <ListItemButton onClick={() => navigate(paths[index])}>
+                <ListItemIcon>{icons[index]}</ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
             </ListItem>
