@@ -11,14 +11,14 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ApiAccess, LoginData } from "../api/ApiAccess";
+import { ApiAccess, LoginDto } from "../api/ApiAccess";
 
 const Login = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [auth, setAuth] = useState(false);
-  const loginData: LoginData = { username, password };
+  const loginData: LoginDto = { username, password };
 
   useEffect(() => {
     ApiAccess.authenticate(setAuth);

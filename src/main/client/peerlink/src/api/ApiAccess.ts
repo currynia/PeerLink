@@ -1,12 +1,12 @@
 export class ApiAccess {
   private static authenticated = false;
-  static authenticateLogin(loginData: LoginData): any {
+  static authenticateLogin(loginDto: LoginDto): any {
     return fetch("/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(loginData),
+      body: JSON.stringify(loginDto),
     }).then((response) => response.json());
   }
 
@@ -36,6 +36,16 @@ export class ApiAccess {
       body: username,
     }).then((response) => response.json());
   }
+
+  static saveTasks(tasksDto: TasksDto): void {
+    fetch("/api/addTasks", {
+      method: "POST",
+      body: JSON.stringify(tasksDto),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
   static setAuthenticated(bool: boolean) {
     this.authenticated = bool;
   }
@@ -45,7 +55,11 @@ export class ApiAccess {
   }
 }
 
-export interface LoginData {
+export interface TasksDto {
+  username: string;
+  tasks: string[];
+}
+export interface LoginDto {
   username: string;
   password: string;
 }

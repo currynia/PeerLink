@@ -5,7 +5,7 @@ import Landing from "./component/Landing";
 import Login from "./component/Login";
 import Register from "./component/Register";
 import TopBar from "./component/ui/TopBar";
-import TaskList from "./component/feature/TaskList";
+import TaskList from "./component/feature/task/TaskList";
 
 function App() {
   const home = "/app";
