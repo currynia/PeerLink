@@ -9,7 +9,6 @@ import TopBar from "./component/ui/TopBar";
 function App() {
   const home = "/app";
   const [showRegisterLogin, setShowRegisterLogin] = useState(true);
-  const [authenticated, setAuthenticated] = useState();
   const updateRegisterLoginButton = (val: boolean) => {
     setShowRegisterLogin(val);
   };
