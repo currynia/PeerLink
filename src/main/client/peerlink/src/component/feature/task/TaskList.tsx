@@ -12,15 +12,17 @@ import TaskItem from "./TaskItem";
 import AddIcon from "@mui/icons-material/Add";
 import EditDialog from "./EditDialog";
 import UserDetails from "../../../UserDetails";
+import DeleteDialog from "./DeleteDialog";
 
 const TaskList = () => {
+  const [title, setTitle] = useState("");
   const [tasks, setTasks] = useState([""]);
   const [body, setBody] = useState("");
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(-1);
+  const [deleteOpen, setDeleteOpen] = useState(false);
   useEffect(() => {
     (async () => {
-      console.log(JSON.parse(sessionStorage.getItem("user") as string));
       const response = await ApiAccess.retrieveTasks(UserDetails.getUsername());
 
       setTasks(response);
@@ -40,13 +42,20 @@ const TaskList = () => {
                 editTasks={modifyTasks}
                 setIndex={() => setIndex(index)}
                 setOpen={setOpen}
+                setTitle={setTitle}
+                setDeleteOpen={setDeleteOpen}
               />
             </ListItem>
             <Divider component="li" />
           </>
         ))}
         <ListItem disablePadding sx={{ paddingLeft: 5 }}>
-          <ListItemButton>
+          <ListItemButton
+            onClick={() => {
+              setOpen(true);
+              setTitle("Add");
+            }}
+          >
             <ListItemIcon>
               <AddIcon />
             </ListItemIcon>
@@ -55,10 +64,17 @@ const TaskList = () => {
         </ListItem>
       </List>
       <EditDialog
-        title="Edit"
+        title={title}
         body={body}
         open={open}
         setOpen={setOpen}
+        setTasks={setTasks}
+        tasks={tasks}
+        index={index}
+      />
+      <DeleteDialog
+        open={deleteOpen}
+        setDeleteOpen={setDeleteOpen}
         setTasks={setTasks}
         tasks={tasks}
         index={index}

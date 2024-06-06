@@ -32,7 +32,18 @@ interface Props {
 }
 const EditDialog = (props: Props) => {
   const [newBody, setNewBody] = useState("");
+
   const handleClose = () => {
+    props.setOpen(false);
+  };
+
+  const handleAdd = () => {
+    const newTasks = props.tasks.concat(newBody);
+    props.setTasks(newTasks);
+    ApiAccess.saveTasks({
+      username: UserDetails.getUsername(),
+      tasks: newTasks,
+    });
     props.setOpen(false);
   };
 
@@ -84,12 +95,18 @@ const EditDialog = (props: Props) => {
             setNewBody(e.target.value)
           }
         />
-        <Typography gutterBottom>{props.body}</Typography>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={handleSave}>
-          Save changes
-        </Button>
+        {props.title === "Edit" && (
+          <Button autoFocus onClick={handleSave}>
+            Save changes
+          </Button>
+        )}{" "}
+        {props.title === "Add" && (
+          <Button autoFocus onClick={handleAdd}>
+            Add
+          </Button>
+        )}
       </DialogActions>
     </BootstrapDialog>
   );

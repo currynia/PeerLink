@@ -11,12 +11,20 @@ interface Props {
   editTasks: (text: string[]) => void;
   setIndex: () => void;
   setOpen: (open: boolean) => void;
+  setTitle: (title: string) => void;
+  setDeleteOpen: (open: boolean) => void;
 }
 const TaskItem = (props: Props) => {
   const handleClickEditOpen = () => {
     props.setBody(props.body);
     props.setIndex();
     props.setOpen(true);
+    props.setTitle("Edit");
+  };
+
+  const handleClickDelete = () => {
+    props.setIndex();
+    props.setDeleteOpen(true);
   };
 
   return (
@@ -31,7 +39,7 @@ const TaskItem = (props: Props) => {
             <ListItemButton onClick={handleClickEditOpen}>
               <EditIcon />
             </ListItemButton>
-            <ListItemButton>
+            <ListItemButton onClick={handleClickDelete}>
               <DeleteIcon />
             </ListItemButton>
           </Box>
