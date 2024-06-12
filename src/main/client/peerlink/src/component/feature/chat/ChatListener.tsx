@@ -1,14 +1,34 @@
-import { useState } from "react";
 import { useSubscription } from "react-stomp-hooks";
+import UserDetails from "../../../UserDetails";
+import ChatDict from "./ChatDict";
+import { ChatDto, Message } from "./ChatDto";
 
-const ChatChild = () => {
-  const [message, setMessage] = useState("");
-  // Subscribe to the topic that we have opened in our spring boot app
-  useSubscription("/app/reply", (message) => {
-    setMessage(message.body);
+interface Props {
+  chatDict: ChatDict;
+  setChatDict: (dict: ChatDict) => void;
+}
+
+const ChatListener = (props: Props) => {
+  const currentUser = UserDetails.getUsername();
+  const chatDict = props.chatDict;
+  useSubscription(`/user/${currentUser}/queue/messages`, (message) => {
+    const messageObj = JSON.parse(message.body);
+    const receiver = messageObj.receiver;
+    const sender = messageObj.sender;
+    const content = messageObj.content;
+
+    const chatObject = new Message(sender, receiver, content);
+    console.log(content);
+    var newDict: ChatDict;
+    if (receiver === currentUser) {
+      newDict = chatDict.addMessage(sender, chatObject);
+    } else {
+      newDict = chatDict.addMessage(receiver, chatObject);
+    }
+    props.setChatDict(newDict);
   });
 
-  return <div> The broadcast message from websocket broker is {message}</div>;
+  return null;
 };
 
-export default ChatChild;
+export default ChatListener;

@@ -29,7 +29,7 @@ const TopBar = (props: Props) => {
     <>
       <AppBar
         sx={{
-          height: 30,
+          height: "fit-content",
           width: 1,
           zIndex: (theme) => theme.zIndex.drawer + 1,
           position: "relative",

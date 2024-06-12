@@ -10,24 +10,32 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { useNavigate } from "react-router-dom";
+import MailIcon from "@mui/icons-material/Mail";
 
 const drawerWidth = 240;
 
 const NavDrawer = () => {
   const navigate = useNavigate();
-  const paths = ["profile", "match", "sessions", "tasks", "settings"];
+  const paths = [
+    "profile",
+    "match",
+    "sessions",
+    "tasks",
+    "messages",
+    "settings",
+  ];
   const icons = [
     <AccountCircleIcon />,
     <PeopleIcon />,
     <MenuBookIcon />,
     <TaskIcon />,
+    <MailIcon />,
     <SettingsIcon />,
   ];
   return (
     <Drawer
       sx={{
-        flexShrink: 0,
-        [`& .MuiDrawer-paper`]: {
+        [`& .MuiPaper-root`]: {
           width: drawerWidth,
           boxSizing: "border-box",
           position: "relative",
@@ -37,7 +45,7 @@ const NavDrawer = () => {
       anchor="left"
     >
       <List>
-        {["Profile", "Match", "Sessions", "ToDo", "Settings"].map(
+        {["Profile", "Match", "Sessions", "ToDo", "Messages", "Settings"].map(
           (text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton onClick={() => navigate(paths[index])}>

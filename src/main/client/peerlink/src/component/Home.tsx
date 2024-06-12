@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import { StompSessionProvider } from "react-stomp-hooks";
 import { ApiAccess } from "../api/ApiAccess";
 import NavDrawer from "./ui/NavDrawer";
 
@@ -17,15 +18,18 @@ const Home = (props: Props) => {
   if (auth) {
     props.showRegisterLogin(false);
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-        }}
-      >
-        <NavDrawer />
-        <Outlet />
-      </div>
+      <StompSessionProvider url={"/ws"}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            height: "100%",
+          }}
+        >
+          <NavDrawer />
+          <Outlet />
+        </div>
+      </StompSessionProvider>
     );
   } else {
     props.showRegisterLogin(true);

@@ -6,6 +6,8 @@ import Login from "./component/Login";
 import Register from "./component/Register";
 import TopBar from "./component/ui/TopBar";
 import TaskList from "./component/feature/task/TaskList";
+import ChatWrapper from "./component/feature/chat/ChatWrapper";
+import { Box } from "@mui/material";
 
 function App() {
   const home = "/app";
@@ -19,7 +21,7 @@ function App() {
         style={{
           display: "flex",
           flexDirection: "column",
-          rowGap: 30,
+          height: "100%",
         }}
       >
         <TopBar showRegisterLogin={showRegisterLogin} />
@@ -35,6 +37,7 @@ function App() {
             element={<Home showRegisterLogin={updateRegisterLoginButton} />}
           >
             <Route path={"tasks"} element={<TaskList />} />
+            <Route path={"messages"} element={<ChatWrapper />} />
           </Route>
         </Routes>
       </div>

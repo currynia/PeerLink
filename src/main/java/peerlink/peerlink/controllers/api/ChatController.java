@@ -1,22 +1,23 @@
-package peerlink.peerlink.controllers.chat;
+package peerlink.peerlink.controllers.api;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import peerlink.peerlink.db.model.Message;
 import peerlink.peerlink.db.model.UserMessage;
 import peerlink.peerlink.db.repository.MessageRepository;
 import peerlink.peerlink.db.repository.UserMessageRepository;
 import peerlink.peerlink.dto.ChatDto;
+import peerlink.peerlink.dto.UserDto;
+import peerlink.peerlink.dto.UserMessageDto;
 import peerlink.peerlink.security.jwt.JwtService;
 
-@Controller
+@RestController
 public class ChatController {
   @Autowired SimpMessagingTemplate messagingTemplate;
 
@@ -25,6 +26,23 @@ public class ChatController {
   @Autowired MessageRepository messageRepository;
 
   @Autowired UserMessageRepository userMsgRepo;
+
+  @PostMapping(value = "/api/chat/history", consumes = "application/json")
+  public List<UserMessageDto> getAllChats(@RequestBody UserDto userDto) {
+    String jwt = userDto.getJwtToken();
+    if (jwtService.isTokenValid(jwt)
+        && Objects.equals(jwtService.extractUsername(jwt), userDto.getUsername())) {
+
+      return userMsgRepo.getUserMessagesWithDetails(userDto.getUsername());
+    }
+    return null;
+  }
+
+  @PostMapping(value = "/api/chat/test", consumes = "application/json")
+  public void test(@RequestBody UserDto userDto) {
+
+    System.out.println(userMsgRepo.getUserMessagesWithDetails(userDto.getUsername()));
+  }
 
   @MessageMapping("/chat")
   public void reply(@Payload ChatDto chatDto) {
