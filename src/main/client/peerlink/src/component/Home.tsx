@@ -4,10 +4,7 @@ import { StompSessionProvider } from "react-stomp-hooks";
 import { ApiAccess } from "../api/ApiAccess";
 import NavDrawer from "./ui/NavDrawer";
 
-interface Props {
-  showRegisterLogin: (bool: boolean) => void;
-}
-const Home = (props: Props) => {
+const Home = () => {
   const navigate = useNavigate();
   const [auth, setAuth] = useState(true);
 
@@ -16,7 +13,6 @@ const Home = (props: Props) => {
   }, []);
 
   if (auth) {
-    props.showRegisterLogin(false);
     return (
       <StompSessionProvider url={"/ws"}>
         <div
@@ -32,7 +28,6 @@ const Home = (props: Props) => {
       </StompSessionProvider>
     );
   } else {
-    props.showRegisterLogin(true);
     navigate("/");
   }
 };

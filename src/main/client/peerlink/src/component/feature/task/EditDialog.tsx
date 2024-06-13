@@ -18,6 +18,10 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogActions-root": {
     padding: theme.spacing(1),
   },
+  "& .css-43tke3-MuiPaper-root-MuiDialog-paper ": {
+    height: "75%",
+    width: "100%",
+  },
 }));
 
 interface Props {
@@ -83,12 +87,13 @@ const EditDialog = (props: Props) => {
       >
         <CloseIcon />
       </IconButton>
-      <DialogContent dividers>
+      <DialogContent sx={{ display: "flex" }} dividers>
         <TextField
+          sx={{ flexGrow: 1, alignSelf: "flex-start" }}
           id="outlined-multiline-static"
-          label="Multiline"
           multiline
-          rows={4}
+          minRows={10}
+          maxRows={15}
           defaultValue={props.body}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setNewBody(e.target.value)

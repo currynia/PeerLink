@@ -1,8 +1,10 @@
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import MailIcon from "@mui/icons-material/Mail";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import PeopleIcon from "@mui/icons-material/People";
 import SettingsIcon from "@mui/icons-material/Settings";
 import TaskIcon from "@mui/icons-material/Task";
+import { useTheme } from "@mui/material";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -10,11 +12,11 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { useNavigate } from "react-router-dom";
-import MailIcon from "@mui/icons-material/Mail";
 
 const drawerWidth = 240;
 
 const NavDrawer = () => {
+  const theme = useTheme();
   const navigate = useNavigate();
   const paths = [
     "profile",

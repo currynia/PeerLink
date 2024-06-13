@@ -1,8 +1,6 @@
-import { Box, ListItem, ListItemButton, ListItemText } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useState } from "react";
-import EditDialog from "./EditDialog";
+import EditIcon from "@mui/icons-material/Edit";
+import { Box, ListItem, ListItemButton, ListItemText } from "@mui/material";
 
 interface Props {
   body: string;

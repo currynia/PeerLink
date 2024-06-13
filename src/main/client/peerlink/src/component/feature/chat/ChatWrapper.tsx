@@ -88,13 +88,13 @@ const ChatWrapper = () => {
         </Box>
         <Divider orientation="vertical" />
 
-        <Paper sx={{ height: 1, flexGrow: 1 }}>
+        <Box height={1} flexGrow={1}>
           <ChatBox
             chatDict={chatDict}
             person={selectedPerson}
             publishHandler={publishHandler}
           />
-        </Paper>
+        </Box>
       </Box>
     </>
   );
