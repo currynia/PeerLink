@@ -6,6 +6,8 @@ import Login from "./component/Login";
 import Register from "./component/Register";
 import TopBar from "./component/ui/TopBar";
 import TaskList from "./component/feature/task/TaskList";
+import AllStudySession from "./component/feature/studysession/AllStudySession";
+import MyStudySession from "./component/feature/studysession/MySession"
 
 function App() {
   const home = "/app";
@@ -35,6 +37,8 @@ function App() {
             element={<Home showRegisterLogin={updateRegisterLoginButton} />}
           >
             <Route path={"tasks"} element={<TaskList />} />
+            <Route path={"all-sessions"} element={<AllStudySession />} />
+            <Route path={"my-sessions"} element={<MyStudySession />} />
           </Route>
         </Routes>
       </div>

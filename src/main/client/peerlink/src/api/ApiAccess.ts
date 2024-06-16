@@ -30,6 +30,51 @@ export class ApiAccess {
     }
   }
 
+  static retrieveSessions(): Promise<Array<StudySession>> {
+    return fetch("/api/studySession/allSession", {
+      method: "GET"    
+    }).then((response)=> response.json())
+  }
+  static deleteStudySession(session: StudySession): void{
+    fetch("/api/studySession/deleteSession", {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(session),
+    }).then((response)=> response.json)
+  }
+
+  static retrieveUserSessions(username: userReq): Promise<Array<StudySession>> {
+    return fetch("/api/studySession/mySessions", {
+      method: "POST",
+      body: JSON.stringify(username),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response) => response.json());
+  }
+
+  static addSessions(session: SessionWOId): Promise<StudySession> {
+    return fetch("/api/studySession/addSession", {
+      method: "POST",
+      body: JSON.stringify(session),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response)=> response.json())
+  }
+
+  static updateSession(updatedSession:StudySession): Promise<StudySession>{
+    return fetch("/api/studySession/updateSession",{
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedSession),
+    }).then((response) => response.json());
+  }
+
   static retrieveTasks(username: string): Promise<Array<string>> {
     return fetch("/api/getTasks", {
       method: "POST",
@@ -55,6 +100,21 @@ export class ApiAccess {
   }
 }
 
+export interface StudySession{
+  id: string;
+  date: string;
+  location: string;
+  user: string;
+}
+
+export interface SessionWOId{
+  date:string;
+  location:string;
+  user:string;
+}
+export interface userReq{
+  username:string;
+}
 export interface TasksDto {
   username: string;
   tasks: string[];
