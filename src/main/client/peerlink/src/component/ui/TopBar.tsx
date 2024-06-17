@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, Paper, useTheme } from "@mui/material/";
+import { AppBar, Box, Button } from "@mui/material/";
 import { useNavigate } from "react-router-dom";
 
 const TopBar = () => {

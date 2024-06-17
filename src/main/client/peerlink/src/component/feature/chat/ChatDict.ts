@@ -1,4 +1,4 @@
-import { ChatDto, Message } from "./ChatDto";
+import { Message } from "./ChatDto";
 
 class ChatDict {
   private readonly dict: { [key: string]: Message[] };

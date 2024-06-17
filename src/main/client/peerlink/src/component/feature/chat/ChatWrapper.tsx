@@ -1,3 +1,4 @@
+import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import {
   Box,
   Divider,
@@ -6,18 +7,16 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
-  Paper,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import UserDetails from "../../../UserDetails";
+import { ApiAccess } from "../../../api/ApiAccess";
+import AddDialog from "./AddDialog";
 import ChatBox from "./ChatBox";
 import ChatDict from "./ChatDict";
-import { ChatDto, Message } from "./ChatDto";
+import { ChatDto } from "./ChatDto";
 import ChatListener from "./ChatListener";
 import ChatPublisher from "./ChatPublisher";
-import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
-import AddDialog from "./AddDialog";
-import { ApiAccess } from "../../../api/ApiAccess";
-import UserDetails from "../../../UserDetails";
 
 const ChatWrapper = () => {
   const [chatDict, setChatDict] = useState<ChatDict>(new ChatDict());
@@ -28,13 +27,16 @@ const ChatWrapper = () => {
   >(() => (_: ChatDto) => {});
 
   const [openAddDialog, setOpenAddDialog] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    index: number
+    index: number,
+    name: string
   ) => {
+    setSelectedPerson(name);
     setSelectedIndex(index);
   };
-  const [selectedIndex, setSelectedIndex] = useState(1);
+
   useEffect(() => {
     (async () => {
       const response = await ApiAccess.retrieveChatHistory(
@@ -59,7 +61,13 @@ const ChatWrapper = () => {
         chatDict={chatDict}
       />
       <ChatListener chatDict={chatDict} setChatDict={setChatDict} />
-      <Box id="chatwrapper" display="flex" flexDirection={"row"} width={1}>
+      <Box
+        id="chatwrapper"
+        display="flex"
+        flexDirection={"row"}
+        width={"100%"}
+        height={"100%"}
+      >
         <Box width={"20%"} display="flex" flexDirection={"column"}>
           <Box alignSelf={"flex-end"}>
             <IconButton
@@ -71,12 +79,11 @@ const ChatWrapper = () => {
           </Box>
 
           <List>
-            {chatDict.getPeople().map((name) => (
+            {chatDict.getPeople().map((name, index) => (
               <ListItemButton
-                selected={selectedIndex === 0}
+                selected={selectedIndex === index}
                 onClick={(event) => {
-                  setSelectedPerson(name);
-                  handleListItemClick(event, 0);
+                  handleListItemClick(event, index, name);
                 }}
               >
                 <ListItem>
@@ -88,13 +95,11 @@ const ChatWrapper = () => {
         </Box>
         <Divider orientation="vertical" />
 
-        <Box height={1} flexGrow={1}>
-          <ChatBox
-            chatDict={chatDict}
-            person={selectedPerson}
-            publishHandler={publishHandler}
-          />
-        </Box>
+        <ChatBox
+          chatDict={chatDict}
+          person={selectedPerson}
+          publishHandler={publishHandler}
+        />
       </Box>
     </>
   );

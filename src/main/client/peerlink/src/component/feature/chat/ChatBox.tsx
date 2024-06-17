@@ -3,8 +3,9 @@ import {
   Button,
   Divider,
   List,
-  ListItemText,
+  Paper,
   TextField,
+  Typography,
 } from "@mui/material";
 import { useState } from "react";
 import UserDetails from "../../../UserDetails";
@@ -33,10 +34,36 @@ const ChatBox = (props: Props) => {
   };
 
   return (
-    <Box display="flex" flexDirection="column" height="100%">
-      <List sx={{ flexGrow: 1 }}>
+    <Box display="flex" flexDirection="column" height="100%" width="80%">
+      <List
+        sx={{
+          overflow: "auto",
+          display: "flex",
+          flexGrow: 1,
+          flexDirection: "column",
+        }}
+      >
         {props.chatDict.getMessages(props.person).map((chat, index) => (
-          <ListItemText key={index}>{chat.content}</ListItemText>
+          <Box
+            marginLeft={props.person === chat.sender ? 2 : 0}
+            marginRight={props.person === chat.sender ? 0 : 2}
+            marginBottom={1.5}
+            alignSelf={props.person === chat.sender ? "flex-start" : "flex-end"}
+            maxWidth={"80%"}
+          >
+            <Paper
+              variant="elevation"
+              elevation={3}
+              sx={{
+                backgroundColor: props.person === chat.sender ? "#EBF5EB" : "",
+                padding: 1,
+              }}
+            >
+              <Typography sx={{ wordWrap: "break-word" }}>
+                {chat.content}
+              </Typography>
+            </Paper>
+          </Box>
         ))}
       </List>
 

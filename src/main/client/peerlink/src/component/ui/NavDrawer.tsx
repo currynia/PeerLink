@@ -13,10 +13,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { useNavigate } from "react-router-dom";
 
-const drawerWidth = 240;
-
 const NavDrawer = () => {
-  const theme = useTheme();
   const navigate = useNavigate();
   const paths = [
     "profile",
@@ -37,10 +34,11 @@ const NavDrawer = () => {
   return (
     <Drawer
       sx={{
-        [`& .MuiPaper-root`]: {
-          width: drawerWidth,
+        [`& .MuiPaper-root .MuiDrawer-root`]: {
+          width: "20%",
           boxSizing: "border-box",
           position: "relative",
+          height: "100%",
         },
       }}
       variant="permanent"

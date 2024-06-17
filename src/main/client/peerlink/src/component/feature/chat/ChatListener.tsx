@@ -1,7 +1,7 @@
 import { useSubscription } from "react-stomp-hooks";
 import UserDetails from "../../../UserDetails";
 import ChatDict from "./ChatDict";
-import { ChatDto, Message } from "./ChatDto";
+import { Message } from "./ChatDto";
 
 interface Props {
   chatDict: ChatDict;

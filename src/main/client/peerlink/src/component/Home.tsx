@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { StompSessionProvider } from "react-stomp-hooks";
@@ -20,10 +21,17 @@ const Home = () => {
             display: "flex",
             flexDirection: "row",
             height: "100%",
+
+            maxWidth: "100%",
           }}
         >
-          <NavDrawer />
-          <Outlet />
+          <Box width="20%">
+            <NavDrawer />
+          </Box>
+
+          <Box width="80%" height="100%">
+            <Outlet />
+          </Box>
         </div>
       </StompSessionProvider>
     );

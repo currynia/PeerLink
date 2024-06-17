@@ -1,4 +1,4 @@
-import { ChatDto, Message } from "../component/feature/chat/ChatDto";
+import { Message } from "../component/feature/chat/ChatDto";
 
 export class ApiAccess {
   private static authenticated = false;
