@@ -35,13 +35,12 @@ const ChatBox = (props: Props) => {
 
   return (
     <Box display="flex" flexDirection="column" height="100%" width="80%">
-      <List
-        sx={{
-          overflow: "auto",
-          display: "flex",
-          flexGrow: 1,
-          flexDirection: "column",
-        }}
+      <Box
+        overflow="auto"
+        display="flex"
+        flexGrow={1}
+        flexDirection="column"
+        width={1}
       >
         {props.chatDict.getMessages(props.person).map((chat, index) => (
           <Box
@@ -59,13 +58,16 @@ const ChatBox = (props: Props) => {
                 padding: 1,
               }}
             >
-              <Typography sx={{ wordWrap: "break-word" }}>
+              <Typography
+                align={props.person === chat.sender ? "left" : "right"}
+                sx={{ wordBreak: "break-word" }}
+              >
                 {chat.content}
               </Typography>
             </Paper>
           </Box>
         ))}
-      </List>
+      </Box>
 
       <Divider orientation="horizontal" />
       <Box display="flex" alignItems="center" p={1}>
