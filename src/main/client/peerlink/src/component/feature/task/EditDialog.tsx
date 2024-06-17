@@ -1,16 +1,15 @@
-import Button from "@mui/material/Button";
-import { styled } from "@mui/material/styles";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
-import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import Typography from "@mui/material/Typography";
-import { ChangeEvent, useState } from "react";
 import { TextField } from "@mui/material";
-import { ApiAccess } from "../../../api/ApiAccess";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import IconButton from "@mui/material/IconButton";
+import { styled } from "@mui/material/styles";
+import { ChangeEvent, useState } from "react";
 import UserDetails from "../../../UserDetails";
+import { ApiAccess } from "../../../api/ApiAccess";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -18,6 +17,10 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
   "& .MuiDialogActions-root": {
     padding: theme.spacing(1),
+  },
+  "& .css-43tke3-MuiPaper-root-MuiDialog-paper ": {
+    height: "75%",
+    width: "100%",
   },
 }));
 
@@ -84,12 +87,13 @@ const EditDialog = (props: Props) => {
       >
         <CloseIcon />
       </IconButton>
-      <DialogContent dividers>
+      <DialogContent sx={{ display: "flex" }} dividers>
         <TextField
+          sx={{ flexGrow: 1, alignSelf: "flex-start" }}
           id="outlined-multiline-static"
-          label="Multiline"
           multiline
-          rows={4}
+          minRows={10}
+          maxRows={15}
           defaultValue={props.body}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setNewBody(e.target.value)

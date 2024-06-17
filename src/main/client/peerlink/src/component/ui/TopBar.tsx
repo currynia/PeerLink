@@ -1,12 +1,9 @@
-import { AppBar, Box, Button, Paper } from "@mui/material/";
+import { AppBar, Box, Button } from "@mui/material/";
 import { useNavigate } from "react-router-dom";
 
-interface Props {
-  showRegisterLogin: boolean;
-}
-
-const TopBar = (props: Props) => {
+const TopBar = () => {
   const navigate = useNavigate();
+
   const button = (
     <Box marginRight={2.5}>
       <Button
@@ -14,7 +11,7 @@ const TopBar = (props: Props) => {
         variant="outlined"
         onClick={() => navigate("/login")}
       >
-        <text>Login</text>
+        Login
       </Button>
       <Button
         disableElevation
@@ -29,25 +26,18 @@ const TopBar = (props: Props) => {
     <>
       <AppBar
         sx={{
-          height: 30,
+          height: "fit-content",
           width: 1,
           zIndex: (theme) => theme.zIndex.drawer + 1,
           position: "relative",
         }}
-        elevation={0}
+        elevation={1}
+        color="transparent"
       >
-        <Paper
-          square={true}
-          sx={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
+        <Box display="flex" alignItems="center">
           <p>Peerlink</p>
-          <Box sx={{ marginLeft: "auto" }}>
-            {props.showRegisterLogin && button}
-          </Box>
-        </Paper>
+          <Box marginLeft="auto">{button}</Box>
+        </Box>
       </AppBar>
     </>
   );
