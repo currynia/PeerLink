@@ -1,43 +1,67 @@
-import React, { useState, useEffect } from 'react';
-import { ApiAccess, Filter, UserProfile } from '../../../api/ApiAccess';
-import { Box, Button, Container, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
+import React, { useState, useEffect } from "react";
+import { ApiAccess, Filter, UserProfile } from "../../../api/ApiAccess";
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
 
 //import axios from 'axios';
 
 const FilterUsers = () => {
-  const [gender, setGender] = useState('');
-  const [module, setModule] = useState('');
-  const [faculty, setFaculty] = useState('');
+  const [gender, setGender] = useState("");
+  const [module, setModule] = useState("");
+  const [faculty, setFaculty] = useState("");
   const [filteredUsers, setFilteredUsers] = useState<UserProfile[]>([]);
   const [moduleCodes, setModuleCodes] = useState<string[]>(["ANY"]);
   const [modules, setModules] = useState<Module[]>([]);
-  const genderOptions = ["ANY","Others", "male", "female"];
-  const facultyOptions = ["ANY","SOC","CHS", "Pharmacy", "FASS", "Med", "Dentistry", 
-    "Biz", "Music", "CDE", "Law", "Nursing"];
+  const genderOptions = ["ANY", "Others", "male", "female"];
+  const facultyOptions = [
+    "ANY",
+    "SOC",
+    "CHS",
+    "Pharmacy",
+    "FASS",
+    "Med",
+    "Dentistry",
+    "Biz",
+    "Music",
+    "CDE",
+    "Law",
+    "Nursing",
+  ];
 
   useEffect(() => {
     (async () => {
-      const modresponse = await fetch('https://api.nusmods.com/v2/2018-2019/moduleList.json', {
-        headers: {
-            'Accept': 'application/json',
-        },
-    }).then((response) => response.json())
-    
-    setModules(modresponse)
+      const modresponse = await fetch(
+        "https://api.nusmods.com/v2/2018-2019/moduleList.json",
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      ).then((response) => response.json());
 
+      setModules(modresponse);
     })();
-  },[]);
+  }, []);
 
   useEffect(() => {
-    if (modules.length > 0) {
-        const codes = modules.map(module => module.moduleCode);
-        setModuleCodes(moduleCodes.concat(codes));
-    }
-}, [modules]);
-
+    const codes = modules.map((module) => module.moduleCode);
+    setModuleCodes(moduleCodes.concat(codes));
+  }, [modules]);
 
   const handleFilter = async () => {
-    const response = await ApiAccess.filterProfile({gender: gender, modules: module, major: faculty})
+    const response = await ApiAccess.filterProfile({
+      gender: gender,
+      modules: module,
+      major: faculty,
+    });
     setFilteredUsers(response);
   };
   return (
@@ -45,7 +69,12 @@ const FilterUsers = () => {
       <Typography variant="h4" component="h2" gutterBottom>
         Filter Users
       </Typography>
-      <Box component="form" noValidate autoComplete="off" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+      <Box
+        component="form"
+        noValidate
+        autoComplete="off"
+        sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+      >
         <FormControl fullWidth>
           <InputLabel id="gender-label">Gender</InputLabel>
           <Select
