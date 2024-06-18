@@ -1,20 +1,20 @@
-import React, { useState } from "react";
 import { LockOutlined } from "@mui/icons-material";
-import { Link, useNavigate } from "react-router-dom";
 import {
+  Avatar,
+  Box,
+  Button,
   Container,
   CssBaseline,
-  Box,
-  Avatar,
-  Typography,
-  TextField,
-  Button,
-  Grid,
   FormControl,
+  Grid,
   InputLabel,
-  Select,
   MenuItem,
+  Select,
+  TextField,
+  Typography,
 } from "@mui/material";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -57,13 +57,13 @@ const Register: React.FC = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(registrationData),
-    }).then((response) => response.json());;
+    }).then((response) => response.json());
 
     // if (!response.ok) {
     //   throw new Error("Backend was not ok");
     // }
     try {
-      if (response.code ==201) {
+      if (response.code == 201) {
         //const data = await response.json();
         setSuccessMessage("Registration successful!");
         // Clear form fields after successful registration
@@ -75,13 +75,13 @@ const Register: React.FC = () => {
         setGender("");
         setFaculty("");
         navigate("/login");
-        } else {
-          throw Error(response.message);
-        } 
-      } catch (error) {
-      setErrorMessage(`Registration failed: ${(error as Error).message}`);
+      } else {
+        throw Error(response.message);
       }
-    };
+    } catch (error) {
+      setErrorMessage(`Registration failed: ${(error as Error).message}`);
+    }
+  };
   return (
     <>
       <Container maxWidth="lg">

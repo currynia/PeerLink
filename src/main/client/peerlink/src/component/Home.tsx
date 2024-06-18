@@ -1,12 +1,11 @@
+import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import { StompSessionProvider } from "react-stomp-hooks";
 import { ApiAccess } from "../api/ApiAccess";
 import NavDrawer from "./ui/NavDrawer";
 
-interface Props {
-  showRegisterLogin: (bool: boolean) => void;
-}
-const Home = (props: Props) => {
+const Home = () => {
   const navigate = useNavigate();
   const [auth, setAuth] = useState(true);
 
@@ -15,20 +14,28 @@ const Home = (props: Props) => {
   }, []);
 
   if (auth) {
-    props.showRegisterLogin(false);
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-        }}
-      >
-        <NavDrawer />
-        <Outlet />
-      </div>
+      <StompSessionProvider url={"/ws"}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            height: "100%",
+
+            maxWidth: "100%",
+          }}
+        >
+          <Box width="20%">
+            <NavDrawer />
+          </Box>
+
+          <Box width="80%" height="100%">
+            <Outlet />
+          </Box>
+        </div>
+      </StompSessionProvider>
     );
   } else {
-    props.showRegisterLogin(true);
     navigate("/");
   }
 };

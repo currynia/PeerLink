@@ -1,12 +1,14 @@
+import { Message } from "../component/feature/chat/ChatDto";
+
 export class ApiAccess {
   private static authenticated = false;
-  static authenticateLogin(loginDto: LoginDto): any {
+  static authenticateLogin(userDto: LoginDto): any {
     return fetch("/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(loginDto),
+      body: JSON.stringify(userDto),
     }).then((response) => response.json());
   }
 
@@ -121,6 +123,19 @@ export class ApiAccess {
       },
     });
   }
+  static retrieveChatHistory(
+    id: string,
+    token: string
+  ): Promise<Array<{ id: string; results: Array<Message> }>> {
+    return fetch("/api/chat/history", {
+      method: "POST",
+      body: JSON.stringify({ username: id, jwtToken: token }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response) => response.json());
+  }
+
   static setAuthenticated(bool: boolean) {
     this.authenticated = bool;
   }
