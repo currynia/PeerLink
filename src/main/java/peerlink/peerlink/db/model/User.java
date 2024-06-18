@@ -30,6 +30,8 @@ public class User implements UserDetails {
     private String major;
 
     private List<String> tasks;
+    
+    private List<String> modules;
 
     public User() {
     }

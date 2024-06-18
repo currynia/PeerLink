@@ -15,7 +15,7 @@ const drawerWidth = 240;
 
 const NavDrawer = () => {
   const navigate = useNavigate();
-  const paths = ["profile", "match", "all-sessions", "tasks", "settings"];
+  const paths = ["profile", "matching", "all-sessions", "tasks", "settings"];
   const icons = [
     <AccountCircleIcon />,
     <PeopleIcon />,
