@@ -32,6 +32,36 @@ export class ApiAccess {
     }
   }
 
+  static filterProfile(filter: Filter): Promise<Array<UserProfile>> {
+      return fetch("/api/filterProfile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(filter),
+      }).then((response) => response.json())
+  }
+
+  static getProfile(username: userReq): Promise<UserProfile>{
+      return fetch("/api/getProfile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(username),
+      }).then((response) => response.json())
+  }
+
+  static updateProfile(UserProfile: UserProfile): void {
+    fetch("/api/updateProfile", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(UserProfile),
+    })
+  }
+
   static retrieveSessions(): Promise<Array<StudySession>> {
     return fetch("/api/studySession/allSession", {
       method: "GET"    
@@ -113,6 +143,20 @@ export class ApiAccess {
   static getAuthenticated() {
     return this.authenticated;
   }
+}
+export interface Filter{
+  gender: string;
+  modules: string;
+  major: string;
+}
+
+export interface UserProfile{
+  username:string;
+  email:string;
+  age:string;
+  gender:string;
+  major:string;
+  modules: string[];
 }
 
 export interface StudySession{

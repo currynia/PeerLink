@@ -23,7 +23,7 @@ const Register: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [age, setAge] = useState<number | "">("");
   const [gender, setGender] = useState("");
-  const [faculty, setFaculty] = useState("");
+  const [major, setFaculty] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ const Register: React.FC = () => {
       password,
       age,
       gender,
-      faculty,
+      major,
     };
 
     const response = await fetch("/api/register", {
@@ -144,7 +144,7 @@ const Register: React.FC = () => {
                   <Select
                     labelId="faculty-label"
                     id="faculty"
-                    value={faculty}
+                    value={major}
                     label="Faculty"
                     onChange={(e) => setFaculty(e.target.value)}
                   >

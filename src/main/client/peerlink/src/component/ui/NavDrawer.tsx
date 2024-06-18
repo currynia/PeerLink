@@ -17,7 +17,7 @@ const NavDrawer = () => {
   const navigate = useNavigate();
   const paths = [
     "profile",
-    "match",
+    "matching",
     "all-sessions",
     "tasks",
     "messages",

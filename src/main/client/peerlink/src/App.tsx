@@ -7,7 +7,10 @@ import Register from "./component/Register";
 import ChatWrapper from "./component/feature/chat/ChatWrapper";
 import TaskList from "./component/feature/task/TaskList";
 import AllStudySession from "./component/feature/studysession/AllStudySession";
-import MyStudySession from "./component/feature/studysession/MySession";
+import MyStudySession from "./component/feature/studysession/MySession"
+import ProfilePage from "./component/feature/profile/ProfilePage";
+import Matching from "./component/feature/matching/Matching";
+//import MyStudySession from "./component/feature/studysession/MySession";
 
 function App() {
   const home = "/app";
@@ -23,6 +26,8 @@ function App() {
             <Route path={"tasks"} element={<TaskList />} />
             <Route path={"all-sessions"} element={<AllStudySession />} />
             <Route path={"my-sessions"} element={<MyStudySession />} />
+            <Route path={"profile"} element={<ProfilePage />} />
+            <Route path={"matching"} element={<Matching />}/>
             <Route path={"messages"} element={<ChatWrapper />} />
           </Route>
         </Routes>
