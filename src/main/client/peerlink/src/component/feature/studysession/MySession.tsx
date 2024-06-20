@@ -8,6 +8,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Typography,
 } from "@mui/material";
 import SessionItem from "./SessionItem";
 import AddIcon from "@mui/icons-material/Add";
@@ -31,12 +32,13 @@ const MySession = () => {
       setSessions(response);
     })();
   }, []);
-  // const modifyLoc = (l: string) => setLocation(l);
-  // const modifyDate = (d: string) => setDate(d);
   const modifyListing = (s: StudySession[]) => setSessions(s);
   return (
     <>
       <List disablePadding sx={{ width: 1 }}>
+      <Typography variant="h4" component="h2" gutterBottom>
+          MY SESSIONS
+      </Typography>
       <div>
         <Link to="/app/all-sessions">
           <Button>Go to all sessions</Button>

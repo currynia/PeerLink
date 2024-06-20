@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ApiAccess, UserProfile } from "../../../api/ApiAccess";
 import UserDetails from "../../../UserDetails";
-import { Button, IconButton } from "@mui/material";
+import { Box, Button, Container, FormControl, Grid, IconButton, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
 
@@ -42,7 +42,6 @@ const ProfilePage = () => {
 
     const handleAddModule = () => {
       if (userProfile && selectedModule && !userModules.includes(selectedModule)) {
-        //setUserModules([...userModules, selectedModule]);
         const newModList = userModules.concat(selectedModule)
         const updatedProfile = {...userProfile, modules:newModList}
         setUserModules(newModList)
@@ -61,84 +60,111 @@ const ProfilePage = () => {
       }
     };
 
-    const handleFacultyChange = (e:React.ChangeEvent<HTMLSelectElement>) => {
+    const handleFacultyChange = (event) => {
       if (userProfile) {
-        const newFac = e.target.value;
+        const newFac = event.target.value;
         setFac(newFac);
-        const updatedProfile:UserProfile = {...userProfile, major:newFac};
+        const updatedProfile = { ...userProfile, major: newFac };
         setUserProfile(updatedProfile);
         ApiAccess.updateProfile(updatedProfile);
+        setEditFacultyMode(false); // Hide the select box after change
       }
-    }
-
-
-
-      return (
-        <div>
-          <h1>MY PROFILE</h1>
-          <p>
-            <strong>Username:</strong> {username}
-          </p>
-          <p>
-            <strong>Email:</strong> {userProfile?.email || 'N/A'}
-          </p>
-          <p>
-            <strong>Age:</strong> {userProfile?.age || 'N/A'}
-          </p>
-          <p>
-                <strong>Faculty:</strong> {userProfile?.major || 'N/A'}
-                {editFacultyMode ? (
-                    <select value={fac} onChange={handleFacultyChange}>
-                        <option value="">--Select a faculty--</option>
-                        {faculties.map((faculty) => (
-                            <option key={faculty} value={faculty}>
-                                {faculty}
-                            </option>
-                        ))}
-                    </select>
-                ) : (
-                    <>
-                        {fac}
-                        <IconButton onClick={() => setEditFacultyMode(true)}>
-                            <EditIcon />
-                        </IconButton>
-                    </>
-                )}
-            </p>
-          <p>
-            <strong>Gender:</strong> {userProfile?.gender || 'N/A'}
-          </p>
-          <div>
-             <h2>Select a Module</h2>
-             <select value={selectedModule} onChange={(e) => setSelectedModule(e.target.value)}>
-                 <option value="">--Select a module--</option>
-                 {moduleCodes.map((code) => (
-                 <option key={code} value={code}>
-                {code}
-                </option>
-             ))}
-            </select>
-            <Button onClick={handleAddModule}>Add Module</Button>
-          </div>
-          <div>
-                <h2>Modules</h2>
-                {userModules.length > 0 ? (
-                  <ul>
-                    {userModules.map((module, index) => (
-                    <li key={index}>
-                     {module}
-                     <Button onClick={() => handleRemoveModule(module)}>Remove</Button>
-                    </li>
-                    ))}
-                  </ul>
-                ) : (
-                    <p>No modules found.</p>
-                )}
-          </div>
-          {/* <button onClick = {handleSave}>SAVE</button> */}
-        </div>
-      );
     };
+
+
+    return (
+      <Container>
+        <Typography variant="h4" component="h2" gutterBottom>
+          MY PROFILE
+        </Typography>
+        <Box component="ul" sx={{ listStyleType: 'none', p: 0 }}>
+          <Box component="li" sx={{ mb: 2 }}>
+            <Typography>
+              <strong>Username:</strong> {userProfile?.username || 'N/A'}
+            </Typography>
+          </Box>
+          <Box component="li" sx={{ mb: 2 }}>
+            <Typography>
+              <strong>Email:</strong> {userProfile?.email || 'N/A'}
+            </Typography>
+          </Box>
+          <Box component="li" sx={{ mb: 2 }}>
+            <Typography>
+              <strong>Age:</strong> {userProfile?.age || 'N/A'}
+            </Typography>
+          </Box>
+          <Box component="li" sx={{ mb: 2 }}>
+            <Typography>
+              <strong>Faculty:</strong>
+              {editFacultyMode ? (
+                <select value={fac} onChange={handleFacultyChange} style={{ marginLeft: 10 }}>
+                  {faculties.map((faculty, index) => (
+                    <option key={index} value={faculty}>
+                      {faculty}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <>
+                  {userProfile?.major || 'N/A'}
+                  <IconButton onClick={() => setEditFacultyMode(true)}>
+                    <EditIcon />
+                  </IconButton>
+                </>
+              )}
+            </Typography>
+          </Box>
+          <Box component="li" sx={{ mb: 2 }}>
+            <Typography>
+              <strong>Gender:</strong> {userProfile?.gender || 'N/A'}
+            </Typography>
+          </Box>
+        </Box>
+        <Box mt={4}>
+          <Typography variant="h5" component="h3">
+            Select a Module
+          </Typography>
+          <select
+            value={selectedModule}
+            onChange={(e) => setSelectedModule(e.target.value)}
+            style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
+          >
+            <option value="" disabled>
+              -- Select a Module --
+            </option>
+            {moduleCodes.map((code, index) => (
+              <option key={index} value={code}>
+                {code}
+              </option>
+            ))}
+          </select>
+          <Button variant="contained" onClick={handleAddModule}>
+            Add Module
+          </Button>
+        </Box>
+        <Box mt={4}>
+          <Typography variant="h5" component="h3">
+            Modules
+          </Typography>
+          {userModules.length > 0 ? (
+            <ul>
+              {userModules.map((module, index) => (
+                <li key={index}>
+                  {module}
+                  <Button onClick={() => handleRemoveModule(module)} sx={{ ml: 2 }}>
+                    Remove
+                  </Button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <Typography>No modules found.</Typography>
+          )}
+        </Box>
+      </Container>
+    );
+  };
+  
 
     interface Module {
         moduleCode: string;

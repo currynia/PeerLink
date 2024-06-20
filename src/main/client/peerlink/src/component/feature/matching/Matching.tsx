@@ -65,132 +65,96 @@ const FilterUsers = () => {
     setFilteredUsers(response);
   };
   return (
-    <Container>
-      <Typography variant="h4" component="h2" gutterBottom>
-        Filter Users
-      </Typography>
-      <Box
-        component="form"
+    <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
+      <h2>Filter Users</h2>
+      <form
         noValidate
         autoComplete="off"
-        sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+        style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
       >
-        <FormControl fullWidth>
-          <InputLabel id="gender-label">Gender</InputLabel>
-          <Select
-            labelId="gender-label"
+        <div>
+          <label htmlFor="gender">Gender</label>
+          <select
             id="gender"
             value={gender}
-            label="Gender"
             onChange={(e) => setGender(e.target.value)}
+            required
+            style={{ width: '100%', padding: '10px', marginTop: '8px' }}
           >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
+            <option value="" disabled>
+              Select Gender
+            </option>
             {genderOptions.map((option, index) => (
-              <MenuItem key={index} value={option}>
+              <option key={index} value={option}>
                 {option}
-              </MenuItem>
+              </option>
             ))}
-          </Select>
-        </FormControl>
-        <FormControl fullWidth>
-          <InputLabel id="module-label">Module</InputLabel>
-          <Select
-            labelId="module-label"
+          </select>
+        </div>
+        <div>
+          <label htmlFor="module">Module</label>
+          <select
             id="module"
             value={module}
-            label="Module"
             onChange={(e) => setModule(e.target.value)}
+            required
+            style={{ width: '100%', padding: '10px', marginTop: '8px' }}
           >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
+            <option value="" disabled>
+              Select Module
+            </option>
             {moduleCodes.map((option, index) => (
-              <MenuItem key={index} value={option}>
+              <option key={index} value={option}>
                 {option}
-              </MenuItem>
+              </option>
             ))}
-          </Select>
-        </FormControl>
-        <FormControl fullWidth>
-          <InputLabel id="faculty-label">Faculty</InputLabel>
-          <Select
-            labelId="faculty-label"
+          </select>
+        </div>
+        <div>
+          <label htmlFor="faculty">Faculty</label>
+          <select
             id="faculty"
             value={faculty}
-            label="Faculty"
             onChange={(e) => setFaculty(e.target.value)}
+            required
+            style={{ width: '100%', padding: '10px', marginTop: '8px' }}
           >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
+            <option value="" disabled>
+              Select Faculty
+            </option>
             {facultyOptions.map((option, index) => (
-              <MenuItem key={index} value={option}>
+              <option key={index} value={option}>
                 {option}
-              </MenuItem>
+              </option>
             ))}
-          </Select>
-        </FormControl>
-        <Button variant="contained" onClick={handleFilter}>
+          </select>
+        </div>
+        <button
+          type="button"
+          onClick={handleFilter}
+          style={{
+            padding: '10px',
+            backgroundColor: '#1976d2',
+            color: 'white',
+            border: 'none',
+            cursor: 'pointer',
+            marginTop: '16px'
+          }}
+        >
           Filter
-        </Button>
-      </Box>
-      <Box mt={4}>
-        <Typography variant="h5" component="h3">
-          Filtered Users
-        </Typography>
+        </button>
+      </form>
+      <div style={{ marginTop: '40px' }}>
+        <h3>Filtered Users</h3>
         <ul>
           {filteredUsers.map((user, index) => (
             <li key={index}>{user.username}</li>
           ))}
         </ul>
-      </Box>
-    </Container>
+      </div>
+    </div>
   );
 };
-
-//   return (
-//     <div>
-//       <h2>Filter Users</h2>
-//       <div>
-//         <label htmlFor="gender">Gender:</label>
-//         <input
-//           id="gender"
-//           type="text"
-//           value={gender}
-//           onChange={(e) => setGender(e.target.value)}
-//         />
-//       </div>
-//       <div>
-//         <label htmlFor="module">Module:</label>
-//         <input
-//           id="module"
-//           type="text"
-//           value={module}
-//           onChange={(e) => setModule(e.target.value)}
-//         />
-//       </div>
-//       <div>
-//         <label htmlFor="faculty">Faculty:</label>
-//         <input
-//           id="faculty"
-//           type="text"
-//           value={faculty}
-//           onChange={(e) => setFaculty(e.target.value)}
-//         />
-//       </div>
-//       <button onClick={handleFilter}>Filter</button>
-//       <ul>
-//         {filteredUsers.map((user, index) => (
-//           <li key={index}>
-//             {user.username}
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// };
 
 interface Module {
   moduleCode: string;

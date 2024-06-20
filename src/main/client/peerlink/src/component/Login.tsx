@@ -18,6 +18,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [auth, setAuth] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const loginData: LoginDto = { username, password };
 
   useEffect(() => {
@@ -38,6 +39,7 @@ const Login = () => {
         }
       } catch (error) {
         console.log((error as Error).message);
+        setErrorMessage((error as Error).message)
       }
     };
 
@@ -93,6 +95,9 @@ const Login = () => {
               >
                 Login
               </Button>
+              {errorMessage && (
+              <Typography color="error">{errorMessage}</Typography>
+            )}
               <Grid container justifyContent={"flex-end"}>
                 <Grid item>
                   <Link to="/register">Don't have an account? Register</Link>

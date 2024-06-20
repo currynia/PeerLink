@@ -5,7 +5,8 @@ import {
   List,
   ListItem,
   ListItemText,
-  Button
+  Button,
+  Typography
 } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -19,6 +20,10 @@ const AllStudySession = () => {
   }, []);
   return (
     <List disablePadding sx={{ width: 1 }}>
+      <Typography variant="h4" component="h2" gutterBottom>
+        ALL STUDY SESSIONS
+      </Typography>
+
       <div>
         <Link to="/app/my-sessions">
           <Button>Go to my sessions</Button>

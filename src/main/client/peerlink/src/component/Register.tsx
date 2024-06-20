@@ -37,10 +37,6 @@ const Register: React.FC = () => {
       setErrorMessage("Passwords do not match");
       return;
     }
-    /*if (typeof age !== 'number' || age <= 0) {
-          setErrorMessage('Please enter a valid age');
-          return;
-        }*/
 
     const registrationData = {
       username,
@@ -234,95 +230,4 @@ const Register: React.FC = () => {
   );
 };
 
-/**
-      return (
-        <div>
-          <h2>Register</h2>
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label>Username:</label>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-              />
-            </div>
-            <div>
-              <label>Email:</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div>
-              <label>Password:</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            <div>
-              <label>Confirm Password:</label>
-              <input
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-              />
-            </div>
-            <div>
-              <label>Age:</label>
-              <input
-                type="number"
-                value={age}
-                onChange={(e) => setAge(e.target.value === '' ? '' : parseInt(e.target.value))}
-                required
-              />
-            </div>
-            <div>
-              <label>Gender:</label>
-              <select
-                value={gender}
-                onChange={(e) => setGender(e.target.value)}
-                required
-              >
-                <option value="" disabled>Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <div>
-              <label>Faculty:</label>
-              <select
-                value={faculty}
-                onChange={(e) => setFaculty(e.target.value)}
-                required
-              >
-                <option value ="" disabled>Select faculty</option>
-                <option value = "SOC">SOC</option>
-                <option value = "CHS">CHS</option>
-                <option value = "Pharmacy">Pharmacy</option>
-                <option value = "FASS">FASS</option>
-                <option value = "Med">Med</option>
-                <option value = "Dentistry">Dentisty</option>
-                <option value = "Biz">Biz</option>
-                <option value = "Music">Music</option>
-                <option value = "CDE">CDE</option>
-                <option value = "Law">Law</option>
-                <option value = "Nursing">Nursing</option>
-              </select>
-            </div>
-            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-            {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
-            <button type="submit">Register</button>
-          </form>
-        </div>
-      );
-    }; */
 export default Register;
