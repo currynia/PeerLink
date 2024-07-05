@@ -1,23 +1,37 @@
+import { Box } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "./Components/Login";
-import Register from "./Components/Register";
-import Landing from "./Components/Landing";
-import Home from "./Components/Home";
-import { useState } from "react";
+import Home from "./component/Home";
+import Landing from "./component/Landing";
+import Login from "./component/Login";
+import Register from "./component/Register";
+import ChatWrapper from "./component/feature/chat/ChatWrapper";
+import TaskList from "./component/feature/task/TaskList";
+import AllStudySession from "./component/feature/studysession/AllStudySession";
+import MyStudySession from "./component/feature/studysession/MySession"
+import ProfilePage from "./component/feature/profile/ProfilePage";
+import Matching from "./component/feature/matching/Matching";
+//import MyStudySession from "./component/feature/studysession/MySession";
 
 function App() {
-  const [role, setRole] = useState("");
+  const home = "/app";
+
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route
-          path="/login"
-          element={<Login onLogin={() => setRole("USER")} />}
-        />
-        <Route path="/register" element={<Register />} />
-        <Route path="/app" element={<Home role={role} />} />
-      </Routes>
+      <Box display="flex" flexDirection="column" height="100%">
+        <Routes>
+          <Route path={"/"} element={<Landing />} />
+          <Route path={"/login"} element={<Login />} />
+          <Route path={"/register"} element={<Register />} />
+          <Route path={home} element={<Home />}>
+            <Route path={"tasks"} element={<TaskList />} />
+            <Route path={"all-sessions"} element={<AllStudySession />} />
+            <Route path={"my-sessions"} element={<MyStudySession />} />
+            <Route path={"profile"} element={<ProfilePage />} />
+            <Route path={"matching"} element={<Matching />}/>
+            <Route path={"messages"} element={<ChatWrapper />} />
+          </Route>
+        </Routes>
+      </Box>
     </BrowserRouter>
   );
 }

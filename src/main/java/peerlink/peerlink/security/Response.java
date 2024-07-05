@@ -1,30 +1,17 @@
 package peerlink.peerlink.security;
 
 import lombok.Getter;
+import peerlink.peerlink.db.model.User;
+import peerlink.peerlink.security.jwt.JwtToken;
 
 @Getter
 public class Response {
-    @Getter
-    private static final Response responseSuccess = new ResponseSuccess();
-
-    @Getter
-    private static final Response duplicateUser = new DuplicateEmail();
-
-    @Getter
-    private static final Response duplicateEmail = new DuplicateUser();
-
-    @Getter
-    private static final Response loginSuccessful = new LoginSuccessful();
-
-    @Getter
-    private static final Response loginFail = new LoginFail();
-
-    @Getter
-    private static final Response serverError = new ServerError();
 
     private final Integer code;
     private final String message;
     private final String status;
+    private User user;
+    private JwtToken token;
 
     private Response(Integer code, String message, String status) {
         this.code = code;
@@ -32,46 +19,48 @@ public class Response {
         this.status = status;
     }
 
-    private static class ResponseSuccess extends Response {
-
-        private ResponseSuccess() {
-            super(201, "created", "success");
-        }
+    private Response(Integer code, String message, String status, User user, JwtToken token) {
+        this.code = code;
+        this.message = message;
+        this.status = status;
+        this.user = user;
+        this.token = token;
     }
 
-    private static class DuplicateUser extends Response {
 
-        private DuplicateUser() {
-            super(409, "duplicate user", "fail");
-        }
+    public static Response authenticationSuccess(User user, JwtToken token) {
+        return new Response(201, "", "success", user, token);
     }
 
-    private static class DuplicateEmail extends Response {
-
-        private DuplicateEmail() {
-            super(409, "duplicate email", "fail");
-        }
+    public static Response responseSuccess() {
+        return new Response(201, "", "success");
     }
 
-    private static class ServerError extends Response {
-
-        private ServerError() {
-            super(500, "Internal server error encountered", "fail");
-        }
+    public static Response duplicateUser() {
+        return new Response(409, "duplicate user", "fail");
     }
 
-    private static class LoginFail extends Response {
-
-        private LoginFail() {
-            super(401, "Invalid username or password", "fail");
-        }
+    public static Response duplicateEmail() {
+        return new Response(409, "duplicate email", "fail");
     }
 
-    private static class LoginSuccessful extends Response {
 
-        private LoginSuccessful() {
-            super(200, "Login success", "success");
-        }
+    public static Response serverError() {
+        return new Response(500, "Internal server error encountered", "fail");
     }
+
+    public static Response loginFail() {
+        return new Response(401, "Invalid username or password", "fail");
+    }
+
+    public static Response loginUnsuccessful() {
+        return new Response(200, "Login success", "success");
+    }
+
+    public static Response unauthenticatedError() {
+        return new Response(401, "authentication fail", "fail");
+    }
+
+
 
 }
